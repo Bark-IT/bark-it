@@ -1,0 +1,269 @@
+<html>
+
+    <link rel="stylesheet" type="text/css" href="/static/main.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+
+    <script src="/static/main.js"></script>
+
+
+    <div class="topbar">
+        <button class="topbarbutton" onclick="ToggleProfileMenu()">
+            <p style="float: left; margin-left: 20%;" id="namebar">Profile</p>
+            <img class="profilepicture" src="images/defaultprofile.png" style="height: 60%;">
+        </button>
+
+        <button class="topbarbutton" onclick="ToggleNoficationMenu()">
+                <p style="float: left; margin-left: 20%;">Notifications</p>
+                <img class="profilepicture" src="images/notification.png" style="height: 60%;">
+        </button>
+
+        <button class="topbarbutton" onclick="SwitchTab('pages')">
+            <p style="float: left; margin-left: 20%;">Pages</p>
+            <img class="profilepicture" src="images/posts.png" style="height: 60%;">
+        </button>
+
+        <button class="topbarbutton" onclick="SwitchTab('images')">
+            <p style="float: left; margin-left: 20%;">Images</p>
+            <img class="profilepicture" src="images/images.png" style="height: 60%;">
+        </button>
+
+        <button class="topbarbutton" onclick="SwitchTab('videos')">
+            <p style="float: left; margin-left: 20%;">Videos</p>
+            <img class="profilepicture" src="images/videos.png" style="height: 60%;">
+        </button>
+
+        <button class="topbarbutton" onclick="SwitchTab('search')">
+            <p style="float: left; margin-left: 20%;">Search</p>
+            <img class="profilepicture" src="images/search.png" style="height: 60%;">
+        </button>
+        
+    </div>
+
+
+
+    <div class="main">
+
+        <div class="tab" id="home">
+            <br>
+            <br>
+            <br>
+            <center>
+                <h1>Hello, Welcome!!!</h1>
+                <h4>Select what you wish to do today.</h4>
+                <button class="mainpagebutton" onclick="SwitchTab('search')"><img src="/images/search.png"><h1>Search</h1>             </button>
+                <button class="mainpagebutton" onclick="SwitchTab('videos')"><img src="/images/videos.png"><h1>Watch videos</h1>       </button>
+                <button class="mainpagebutton" onclick="SwitchTab('images')"><img src="/images/images.png"><h1>Look at images</h1>     </button>
+                <button class="mainpagebutton" onclick="SwitchTab('pages')"><img src="/images/posts.png"><h1>Browse pages</h1>       </button>
+                <button class="mainpagebutton" onclick="ToggleNoficationMenu()"><img src="/images/notification.png"><h1>Check notifications</h1></button>
+                <button class="mainpagebutton" onclick="SwitchTab('friends')"><img src="/images/friends.png"><h1>Text friends</h1>            </button>
+                <button class="mainpagebutton" onclick="SwitchTab('settings')"><h1>Change settings&#9881;</h1></button>
+            </center>
+        </div>
+
+
+        <div class="tab" id="friends">
+            <h1>Friends</h1>
+        </div>
+        <div class="tab" id="search">
+            <h1>Search</h1>
+        </div>
+        <div class="tab" id="videos">
+            <h1>Videos</h1>
+        </div>
+        <div class="tab" id="images">
+            <h1>Images</h1>
+        </div>
+        <div class="tab" id="pages">
+            <h1>Pages</h1>
+        </div>
+        <div class="tab" id="create">
+            <h1>Create</h1>
+        </div>
+        <div class="tab" id="profile">
+            <h1>profile</h1>
+        </div>
+        <div class="tab" id="settings">
+            <h1>Settings</h1>
+        </div>
+        <div class="tab" id="help">
+            <h1>Help & more</h1>
+        </div>
+        <div class="tab" id="theme">
+            <h1>Theme</h1>
+        </div>
+        <div class="tab" id="login">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h3>login</h3>
+                    <h6>Don't make your password too easy to guess.</h6>
+                    <form id="registerLoginForm" method="POST">
+                        <label for="email">Email:</label><br>
+                        <input type="text" class="input-field" id="username" name="email" required><br>
+                        <label for="password">Password:</label><br>
+                        <input type="password" class="input-field" id="password" name="password" required><br><br>
+                        <input type="submit" name="register" value="Register">
+                        <input type="submit" name="login" value="Login">
+                    </form>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="code">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h3>Enter code</h3>
+                    <h6>A code should appear in your email right now.</h6>
+                    <form method="POST" action="/code">
+                        <label for="email">Email:</label><br>
+                        <input type="text" class="input-field" id="username" name="email" required><br>
+                        <label for="code">Code:</label><br>
+                        <input type="code" class="input-field" id="code" name="code" required><br><br>
+                        <input type="submit" name="submit" value="submit">
+                    </form>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="codepass">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h3>Enter code</h3>
+                    <h6>A code should appear in your email right now.</h6>
+                    <form method="POST" action="/code">
+                        <label for="email">Code:</label><br>
+                        <input type="text" class="input-field" id="codepass" name="codepass" required><br>
+                        <label for="code">New Password:</label><br>
+                        <input type="code" class="input-field" name="codepass" required><br><br>
+                        <input type="submit" name="submit" value="submit">
+                    </form>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="setup">
+            <center>
+                <div style="margin-top: 10px; height: 90%;" class="forms">
+                    <h3>Account Setup</h3>
+                    <h6>Congrats!!! Your new account has been created! Now enter a Username and agree to our services and you'll be set!!</h6>
+                    <form method="POST" action="/setup">
+                        <label for="email">Username:</label><br>
+                        <p id="namecheckbox"></p>
+                        <input type="text" class="input-field" id="usernamebox" name="username" required>
+                        <br>
+                        <br>
+                        <input type="checkbox" required><a href="/about" style="color: aquamarine;">I understand that my account may be removed for any legal reason</a>
+                        <br>
+                        <br>
+                        <input type="checkbox" required><a href="/about" style="color: aquamarine;">I understand that my account must follow US law</a>
+                        <br>
+                        <br>
+                        <input type="checkbox" required><a href="/about" style="color: aquamarine;">I agree to the storing of cookies on my devices in order for my account to be accessed</a>
+                        <br>
+                        <br>
+                        <input type="submit" name="submit" value="submit" id="namecheckbutton">
+                    </form>
+                    
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="regerror">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h1>Error: account already exists or you entered an invalid email.</h1>
+                    <button onclick="SwitchTab('login')">Go Back</button>
+                </div>
+            </center>
+        </div>
+        
+        <div class="tab" id="logerror">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h1>Error: either the password or the email was entered incorrectly</h1>
+                    <button onclick="SwitchTab('login')">Go Back</button>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="codeerror">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h1>Error: Wrong code or email</h1>
+                    <button onclick="SwitchTab('code')">Go Back</button>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="nameerror">
+            <center>
+                <div style="margin-top: 10px; height: 75%;" class="forms">
+                    <h1>Error: Name already taken</h1>
+                    <button onclick="SwitchTab('setup')">Go Back</button>
+                </div>
+            </center>
+        </div>
+
+        <div class="tab" id="videoplayer">
+            <video id="videoplaying" width="100%" height="80%" controls>
+                <source id="videosource" src="" type="video/mp4">
+            </video>
+            <div style="width: 100%;">
+                <center>
+                    <h2 id="videotitle">test</h2>
+                    <h5 id="videodescription"></h5>
+                </center>
+            </div>
+        </div>
+        <div class="tab" id="imageplayer">
+            <h1>imageplayer</h1>
+        </div>
+        <div class="tab" id="pageloader">
+            <h1>pageloader</h1>
+        </div>
+    </div>
+
+    <div class="controlbar">
+            
+            <button class="bottombarbutton" style="margin-left: 20%;" onclick="SwitchTab('home')">
+                <img class="profilepicture" src="images/bark-it-alternate.png" style="height: 60%;">
+            </button>
+
+            <button class="bottombarbutton" onclick="SwitchTab('create')"><h1>+</h1></button>
+            <button class="bottombarbutton" onclick="SwitchTab('friends')">
+                <img class="profilepicture" src="images/friends.png" style="height: 60%;">
+            </button>
+    </div>
+
+    <div class="profilemenu" id="profilemenu">
+        <button class="profilebutton" onclick="SwitchTab('profile');ToggleProfileMenu()"><h1>Profile</h1></button>
+        <hr>
+        <button class="profilebutton" onclick="SwitchTab('settings');ToggleProfileMenu()"><h1>Settings</h1></button>
+        <hr>
+        <button class="profilebutton" onclick="SwitchTab('help');ToggleProfileMenu()"><h1>Help & more</h1></button>
+        <hr>
+        <button class="profilebutton" onclick="SwitchTab('theme');ToggleProfileMenu()"><h1>Theme</h1></button>
+        <hr>
+        <button class="profilebutton" onclick="SwitchTab('login');ToggleProfileMenu()"><h1>Switch Account</h1></button>
+        <hr>
+        <a href="/logout"><button class="profilebutton"><h1>Logout</h1></button></a>
+    </div>
+
+    <div class="notificationmenu" id="notificationmenu">
+        <h6>Notifications</h6>
+        <hr>
+        <div class="videopreview"><center><img src="images/video.png" style="width: 80%;"><p>Some random video</p><h6>Testificate</h6></center></div>
+        <div class="videopreview"><center><img src="images/video.png" style="width: 80%;"><p>Some random video</p><h6>Testificate</h6></center></div>
+        <div class="videopreview"><center><img src="images/video.png" style="width: 80%;"><p>Some random video</p><h6>Testificate</h6></center></div>
+
+        <div class="videopreview"><center><img src="images/image.png" style="width: 80%;"><p>Wacky image I made</p><h6>Herobrine</h6></center></div>
+        <div class="videopreview"><center><img src="images/image.png" style="width: 80%;"><p>Wacky image I made</p><h6>Herobrine</h6></center></div>
+        <div class="videopreview"><center><img src="images/image.png" style="width: 80%;"><p>Wacky image I made</p><h6>Herobrine</h6></center></div>
+
+        <div class="videopreview"><center><p>Random post made by your idol</p><h6>Bill Gates</h6></center></div>
+        <div class="videopreview"><center><p>Random post made by your idol</p><h6>Bill Gates</h6></center></div>
+        <div class="videopreview"><center><p>Random post made by your idol</p><h6>Bill Gates</h6></center></div>        
+
+    </div>
+
+</html>

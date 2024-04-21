@@ -1,0 +1,290 @@
+:root {
+    --background: #111;
+    --foreground: #666666;
+    --background1: #222;
+    --gradient: linear-gradient(180deg, rgba(249, 123, 114, 1) 0%, rgba(252, 255, 178, 1) 65%, #01FFD4 100%);
+    --text: #666666;
+    --bwidth: 1px;
+    --font: sans-serif;
+    --lightcolor: #01FFD4;
+    --brighttext: white;
+    --blur: blur(0px);
+  }
+
+  body {
+      touch-action:none;
+      background-color: var(--background);
+      overflow-y: hidden;
+      color: var(--text);
+      font-family: var(--font);
+  }
+  
+  p {
+      border: none;
+      width: auto;
+      height: auto;
+      background-size: 100%;
+      background-repeat: repeat;
+      color: var(--brighttext);
+  }
+
+  h1 {
+      border: none;
+      width: auto;
+      height: auto;
+      background-image: var(--gradient);
+      background-size: 100%;
+      background-repeat: repeat;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent; 
+      -moz-background-clip: text;
+      -moz-text-fill-color: transparent;
+  }
+
+  button {
+      color: var(--text);
+      border: solid;
+      border-width: var(--bwidth);
+      border-color: var(--foreground);
+      background-color: var(--background);
+      transition: 100ms;
+  }
+
+
+  hr {
+      border-color: var(--foreground);
+      height: 1px;
+  }
+  
+  .forms {
+      margin-top: 10px;
+      background-color: var(--background);
+      border: solid;
+      border-radius: 5px;
+      border-color: var(--foreground);
+      border-width: 1px;
+      width: 80%;
+  }
+
+  .forms .input-field {
+      background-color: var(--background);
+      border: solid;
+      border-radius: 3px;
+      border-color: var(--foreground);
+      border-width: 1px;
+      color: var(--text);
+      height: 50px;
+      width: 75%;
+  }
+  
+  .forms input[type="submit"] {
+      background-color: var(--background);
+      border: solid;
+      border-radius: 3px;
+      border-color: var(--foreground);
+      border-width: 1px;
+      color: var(--text);   
+      width:37.5%;
+      height: 20%;
+      cursor:pointer;
+  }
+
+  .forms input[type="submit"]:hover {
+    background-color: var(--background1);
+    transition: 300ms;
+  }
+
+  .forms input[type="submit"]:active {
+    background-color: var(--foreground);
+    transition: 300ms;
+  }
+
+
+  .topbar {
+      top: 0%;
+      width: 100%;
+      height: 10%;
+      background-color: var(--background);
+      filter: var(--blur);
+  }
+
+  .topbarbutton {
+      transition: 100ms;
+      border-style: none;
+      width: 16.665%;
+      height: 100%;
+      background-color: var(--background);
+      float: right;
+      border-left: solid;
+      border-right: solid;
+      border-width: var(--bwidth);
+  }
+  .topbarbutton:hover {
+      border-style: solid;
+      border-width: var(--bwidth);
+      border-bottom: none;
+      border-bottom-width: var(--bwidth);
+      border-color: var(--foreground);
+      border-top-color: var(--lightcolor);
+  }
+  .topbarbutton:active {
+      transition: 100ms;
+      background-color: var(--foreground);
+  }
+  .topbarbutton p {
+      color: var(--foreground);
+  }
+  .bottombarbutton {
+      float: left;
+      padding-left: 10px;
+      transition: 100ms;
+      border-style: none;
+      width: 20%;
+      height: 100%;
+      background-color: var(--background);
+      border-left: solid;
+      border-right: solid;
+      border-width: var(--bwidth);
+  }
+  .bottombarbutton:hover {
+      border-style: solid;
+      border-width: var(--bwidth);
+      border-top: none;
+      border-bottom-width: var(--bwidth);
+      border-color: var(--foreground);
+      border-bottom-color: var(--lightcolor);
+  }
+  .bottombarbutton:active {
+      transition: 100ms;
+      background-color: var(--foreground);
+  }
+
+  .main {
+      float: right;
+      background-color: var(--background1);
+      border-style: solid;
+      border-width: var(--bwidth);
+      border-color: var(--foreground);
+      border-left: var(--background);
+      border-right: var(--background);
+      width: 100%;
+      height: 80%;
+      filter: var(--blur);
+  }
+
+  .controlbar {
+      bottom: 3px;
+      width: 98.8%;
+      height: 10%;
+      background-color: var(--background);
+      z-index: 1;
+  }
+
+  .profilemenu {
+      display: none;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      position: absolute;
+      top: 11%;
+      right: 0%;
+      border-style: solid;
+      border-color: var(--foreground);
+      border-width: var(--bwidth);
+      width: 50%;
+      height: 50%;
+      background-color: var(--background);
+  }
+
+  .notificationmenu {
+      display: none;
+      position: absolute;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      top: 11%;
+      right: 15%;
+      border-style: solid;
+      border-color: var(--foreground);
+      border-width: var(--bwidth);
+      width: 30%;
+      height: 50%;
+      background-color: var(--background);
+  }
+
+  .profilebutton {
+      position: static;
+      bottom: 1%;
+      width: 100%;
+      height: 20%;
+      transition: 100ms;
+      border-style: none;
+      background-color: var(--background);
+  }
+  .profilebutton:hover {
+      background-color: var(--foreground);
+      color: var(--background);
+  }
+
+  .profilepicture { 
+      border-radius: 100px;
+  }
+
+  .tab {
+      background-color: --;
+      position: static;
+      height: 100%;
+      width: 100%;
+      overflow-y: scroll;
+      z-index: 0;
+  }
+
+  .videopreview {
+      width: 20%;
+      height: auto;
+      float: left;
+      transition: 200ms;
+      margin: auto;
+      margin-bottom: 5%;
+  } 
+  .videopreview:hover {
+      background-color: var(--foreground);
+      transition: 200ms;
+  }
+
+
+  .mainpagebutton {
+      border: solid;
+      border-radius: 8px;
+      border-width: 3px;
+      width: 25%;
+      height: 30%;
+      border-top: none;
+      border-left: none;
+      margin-bottom: 2%;
+      margin-right: 2%;
+  }
+
+  .mainpagebutton:hover {
+      transition: 10ms;
+      border-width: 1px;
+      border-bottom: none;
+      border-right: none;
+      border-top: solid;
+      border-left: solid;
+  }
+
+  .mainpagebutton img {
+      height: 60%;
+  }
+
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--foreground);
+  }
