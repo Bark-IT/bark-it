@@ -1,2 +1,2 @@
-# bark-it
+# Bark-IT
 Main Repository for bark-it
