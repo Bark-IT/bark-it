@@ -1,12 +1,10 @@
 import random
 import os
-# database
-#from pymongo import MongoClient
-
 import json
-
-#from cryptography.fernet import Fernet
-
+import time
+import moviepy.editor as moviepy
+from PIL import Image
+from datetime import date
 from flask_socketio import SocketIO, send
 from flask import (
     Flask,
@@ -60,7 +58,26 @@ def makeaccount(name):
 def transferaccount(oldname,name):
     os.rename("accounts/"+oldname+"","accounts/"+name+"")
 
-   
+
+def checkaccount(email,password):
+    with open("emails/"+email+"/data","r") as datafile:
+        datasplit = datafile.read().split("\n")
+        return password == datasplit[1]
+
+def getname(email):
+    with open("emails/"+email+"/data","r") as datafile:
+        datasplit = datafile.read().split("\n")
+        return datasplit[0]
+
+def filter(var):
+    return (
+        var.replace("\\", "&#92;")
+        .replace('"', "&quot;")
+        .replace("'", "&#39;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .strip()
+    )
 
 
 def send_email(subject, body, to_email):
@@ -100,9 +117,9 @@ def handle_message(message):
             case "tick":
                 send(json.dumps(packet), room=request.sid)
             case "getalgorithmvideo":
-                randid = random.choice(["nathan","abcdefg"])
-                video = json.loads(open("uservideos/"+randid+"/data.json","r").read())
-                send('{"packet":"video", "video":"'+randid+'","views":"'+str(video["views"])+'", "name" : "'+video["name"]+'", "publisher" :"'+video["publisher"]+'", "id" : "'+randid+'"}', room=request.sid)
+                randid = random.choice(os.listdir("uservideos"))
+                video = open("uservideos/"+randid+"/data.json","r").read()
+                send(video, room=request.sid)
             case "getdailytrendingvideo":
                 pass
             case "updateviewcount":
@@ -192,6 +209,10 @@ def register():
 
 @app.route('/login', methods=['POST'])
 def login():
+
+    if not request.form["email"] in os.listdir("emails"):
+        return redirect("/#logerror")
+
     with open("emails/"+request.form["email"]+"/data","r") as datafile:
         if request.form["email"] in os.listdir("emails"):
             
@@ -238,5 +259,51 @@ def logout():
     session.clear()
     return redirect("/")
 
+@app.route('/uploadvideo', methods=['POST'])
+def upload_file():
+    if not session.get("email",False) or not session.get("password",False):
+        return redirect("/#login")
+
+    if not checkaccount(session["email"],session["password"]):
+        return redirect("/#login")
+    
+    vidID = request.form["Title"].replace(" ","")+"-"+str(time.time())
+    os.mkdir("uservideos/"+vidID)
+    filenameSplit = request.files["video"].filename.split(".")
+    extension = filenameSplit[len(filenameSplit)-1]
+    request.files["video"].save("uservideos/"+vidID+"/"+"video." + extension)
+    if not extension == "mp4":
+        moviepy.VideoFileClip("uservideos/"+vidID+"/"+"video." + extension).write_videofile("uservideos/"+vidID+"/"+"video.mp4")
+        os.remove("uservideos/"+vidID+"/"+"video." + extension)
+
+    filenameSplit = request.files["thumbnail"].filename.split(".")
+    extension = filenameSplit[len(filenameSplit)-1]
+    request.files["thumbnail"].save("uservideos/"+vidID+"/"+"thumbnail." + extension)
+
+    if not extension == "png":
+        Image.open("uservideos/"+vidID+"/"+"thumbnail." + extension).save("uservideos/"+vidID+"/thumbnail.png")
+
+    datapacket = {
+        "packet" : "video",
+        "id" : vidID,
+        "name" : request.form["Title"],
+        "date" : str(date.today()),
+        "views" : 0,
+        "likes" : 0,
+        "publisher" : getname(session["email"]),
+        "description" : ""#filter(request.form["description"])
+    }
+    with open("uservideos/"+vidID+"/data.json","w") as datafile:
+        datafile.write(json.dumps(datapacket))
+
+    #request.files["thumbnail"].save("videos/"+vidID)
+
+    print(vidID)
+    return redirect("/#profile")
+
+
+
 if __name__ == '__main__':
+    app.config['MAX_CONTENT_LENGTH'] = 50000000
     socketio.run(app, debug=True)
+    

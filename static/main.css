@@ -76,6 +76,20 @@
       height: 50px;
       width: 75%;
   }
+  .forms input[type=file]::file-selector-button {
+    margin-right: 20px;
+    border: none;
+    background: var(--lightcolor);
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: var(--background);
+    cursor: pointer;
+    
+  }
+  
+  .forms input[type=file]::file-selector-button:hover {
+    background: var(--gradient);
+  }
   
   .forms input[type="submit"] {
       background-color: var(--background);
@@ -276,6 +290,72 @@
       height: 60%;
   }
 
+  .friendslist {
+    border-right: solid;
+    width: 30%;
+    height:100%;
+    top: 0%;
+    overflow-y: scroll;
+
+  }
+
+  .friendslist button {
+    width: 100%;
+    height: 15%;
+  }
+
+  .chatbox {
+    top: 0%;
+    right: 0%;
+    position: absolute;
+    border: solid;
+    height: 98%;
+    width: 69%;
+    background-color: var(--background);
+    
+  }
+
+
+
+    .postpreview {
+        width: 25%;
+        height: 60%;
+        transition: 200ms;
+        float: left;
+        border-bottom: solid;
+        border-color: var(--foreground);
+        overflow-y: scroll;
+    } 
+    .postpreview:hover {
+        background-color: var(--background);
+        transition: 200ms;
+    }
+
+    .postimage {
+        height: 30%;
+        
+    }
+    .postinteract {
+        position:relative;
+        
+        width: 25%;
+        height: 30%;
+       
+    }
+
+    .postinteractbutton {
+        border: none;
+        width: 50%;
+        height: 50%;
+        bottom: 0%;
+        border-radius: 360px;
+        background-color: var(--background2);
+    }
+
+    .postinteractbutton:hover {
+        background-color: var(--background1);
+        
+    }
 
   ::-webkit-scrollbar {
     width: 5px;

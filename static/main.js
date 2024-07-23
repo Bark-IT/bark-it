@@ -10,10 +10,11 @@ var intervalId = setInterval(update, 5000);
 var socket = io.connect('http://' + document.domain + ':' + location.port);
 
 
-
+let usrname = ""
 function PlayVideo(ID,title,views,publisher) {
     document.getElementById("videosource").src = "/video/"+ID
     document.getElementById("videotitle").innerText = title + " - "+views+" views"
+    
     SwitchTab("videoplayer");
     document.getElementById('videoplaying').load();
     document.getElementById('videoplaying').play();
@@ -28,11 +29,13 @@ socket.on('message', function(data) {
     
     switch (packet["packet"]) {
         case "video":
-            document.getElementById("videos").innerHTML += '<div onclick="PlayVideo(\''+packet["id"]+'\',\''+packet["name"]+'\',\''+packet["views"]+'\',\''+packet["publisher"]+'\');" class="videopreview"><center><img src="/videothumbnail/'+ packet["video"]+'" style="height: 30%; width: 100%;"><p>'+packet["name"]+'</p><h6>'+packet["publisher"]+' - '+packet["views"]+' views</h6></center></div>'
+            document.getElementById("videos").innerHTML += '<div onclick="PlayVideo(\''+packet["id"]+'\',\''+packet["name"]+'\',\''+packet["views"]+'\',\''+packet["publisher"]+'\');" class="videopreview"><center><img src="/videothumbnail/'+ packet["id"]+'" style="height: 30%; width: 100%;"><p>'+packet["name"]+'</p><h6>'+packet["publisher"]+' - '+packet["views"]+' views</h6></center></div>'
         break;
         
         case "name":
             document.getElementById("namebar").textContent = packet["name"]
+            usrname = packet["name"]
+            document.getElementById("vidusr").innerText = usrname+" - 69 views"
         break;
         
         case "namecheck":
@@ -65,6 +68,11 @@ document.addEventListener("DOMContentLoaded", function(){
         usernamebox.value = usernamebox.value.replaceAll(" ","_")
         socket.emit('message', '{"packet":"namecheck","name":"'+usernamebox.value+'"}');
     });
+    var vidnamebox = document.getElementById('vidnamebox');
+    vidnamebox.addEventListener('input', function() {
+        document.getElementById("vidname").innerText = vidnamebox.value
+    });
+
     document.getElementById("registerLoginForm").addEventListener("submit", function(event) {
     
         if (event.submitter && event.submitter.name === "register") {
@@ -79,12 +87,25 @@ document.addEventListener("DOMContentLoaded", function(){
     var divElement = document.getElementById('videos');
 
     divElement.onscroll = function() {
-    if (divElement.scrollHeight - divElement.scrollTop === divElement.clientHeight) {
-        for (var i=0;i<50;i++) {
-            socket.emit('message', '{"packet":"getalgorithmvideo"}');
+        if (divElement.scrollHeight - divElement.scrollTop === divElement.clientHeight) {
+            for (var i=0;i<50;i++) {
+                socket.emit('message', '{"packet":"getalgorithmvideo"}');
+            }
         }
-    }
-};
+    };
+
+    const input = document.getElementById('thumbnailupload');
+	const preview = document.getElementById('thumbnaildisplay');
+	input.addEventListener('change', function() {
+	  if (input.files && input.files[0]) {
+		const reader = new FileReader()
+		reader.onload = function(e) {
+		  preview.src = e.target.result
+		}
+		reader.readAsDataURL(input.files[0]);
+	  }
+	});
+    
 });
 
 
@@ -112,9 +133,19 @@ function ReloadTabs() {
 
 function SwitchTab(tab) {
     document.getElementById('videoplaying').pause();
+    oldtab = enabledtab;
+    document.getElementById(enabledtab).style.display = "none"
     enabledtab = tab;
+    document.getElementById(enabledtab).style.display = "block"
     window.location.hash = tab
-    ReloadTabs();
+    if (enabledtab == "videos") {
+
+        for (var i=0;i<50;i++) {
+            socket.emit('message', '{"packet":"getalgorithmvideo"}');
+        }
+    } else {
+        document.getElementById("videos").innerHTML = "<h1>Videos</h1>"
+    }
 }
 
 function HideMenus() {
